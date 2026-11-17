@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifeloop - Connect. Help. Grow.</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8f5;
+            color: #26352d;
+        }
+
+        header {
+            background: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px #00000010;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            color: #16834b;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #16834b;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 75px 20px;
+            background: linear-gradient(135deg, #dff8e9, #f2fff6);
+        }
+
+        .hero h1 {
+            font-size: 43px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #16834b;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #52645a;
+            margin-bottom: 25px;
+        }
+
+        button {
+            background: #16834b;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #106638;
+        }
+
+        .secondary {
+            background: white;
+            color: #16834b;
+            border: 1px solid #16834b;
+            margin-left: 10px;
+        }
+
+        section {
+            padding: 45px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            font-size: 29px;
+            margin-bottom: 10px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 18px;
+        }
+
+        .category {
+            background: white;
+            padding: 25px 12px;
+            text-align: center;
+            border-radius: 12px;
+            border: 1px solid #e1eee5;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+            border-color: #16834b;
+        }
+
+        .category .emoji {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .category h3 {
+            font-size: 16px;
+        }
+
+        .tools {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        input, select, textarea {
+            padding: 12px;
+            border: 1px solid #ccd9cf;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .tools input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .tools select {
+            min-width: 150px;
+            background: white;
+        }
+
+        .posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .post {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #e1eee5;
+        }
+
+        .post h3 {
+            margin: 12px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e3f7eb;
+            color: #16834b;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .post p {
+            color: #617067;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .post small {
+            display: block;
+            margin-bottom: 15px;
+            color: #78847c;
+        }
+
+        .ai-box {
+            background: #e5f6ec;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .ai-box h2 {
+            margin-bottom: 12px;
+        }
+
+        .ai-box p {
+            margin-bottom: 18px;
+        }
+
+        .ai-input {
+            width: 70%;
+            max-width: 500px;
+            margin-bottom: 12px;
+        }
+
+        #aiResult {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #126c3b;
+        }
+
+        footer {
+            background: #173e2a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer p {
+            margin: 7px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #0008;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 18px;
+        }
+
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 23px;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .ai-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">🌱 Lifeloop</div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#categories">Explore</a>
+            <a href="#community">Community</a>
+            <a href="#ai">AI Help</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>One Community. <span>Endless Possibilities.</span></h1>
+
+        <p>
+            Connect with people, share your needs, offer help
+            and make a difference in everyday life.
+        </p>
+
+        <button onclick="openModal()">Post a Need +</button>
+        <button class="secondary"
+            onclick="document.getElementById('community').scrollIntoView()">
+            Explore Community
+        </button>
+    </section>
+
+    <section id="categories">
+        <div class="section-title">
+            <h2>Explore Our Community</h2>
+            <p>Find opportunities and help in different areas.</p>
+        </div>
+
+        <div class="categories">
+            <div class="category" onclick="filterCategory('Education')">
+                <div class="emoji">📚</div>
+                <h3>Education</h3>
+            </div>
+
+            <div class="category" onclick="filterCategory('Social Help')">
+                <div class="emoji">🤝</div>
+                <h3>Social Help</h3>
+            </div>
+
+            <div class="category" onclick="filterCategory('Food')">
+                <div class="emoji">🍱</div>
+                <h3>Food</h3>
+            </div>
+
+            <div class="category" onclick="filterCategory('Jobs and Skills')">
+                <div class="emoji">💼</div>
+                <h3>Jobs & Skills</h3>
+            </div>
+
+            <div class="category" onclick="filterCategory('Environment')">
+                <div class="emoji">🌳</div>
+                <h3>Environment</h3>
+            </div>
+
+            <div class="category" onclick="filterCategory('Community')">
+                <div class="emoji">🏘️</div>
+                <h3>Community</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="community">
+        <div class="section-title">
+            <h2>Community Activities</h2>
+            <p>Discover people who need help or are ready to help.</p>
+        </div>
+
+        <div class="tools">
+            <input type="text" id="searchInput"
+                placeholder="Search community needs..."
+                oninput="displayPosts()">
+
+            <select id="locationFilter" onchange="displayPosts()">
+                <option value="All">All Locations</option>
+                <option value="Local">Local</option>
+                <option value="Nationwide">Nationwide</option>
+            </select>
+
+            <select id="categoryFilter" onchange="displayPosts()">
+                <option value="All">All Categories</option>
+                <option>Education</option>
+                <option>Social Help</option>
+                <option>Food</option>
+                <option>Jobs and Skills</option>
+                <option>Environment</option>
+                <option>Community</option>
+            </select>
+        </div>
+
+        <div class="posts" id="postsContainer"></div>
+    </section>
+
+    <section id="ai">
+        <div class="ai-box">
+            <h2>🤖 Lifeloop AI Community Assistant</h2>
+
+            <p>
+                Tell us what you need. Our demo assistant
+                will suggest a suitable community category.
+            </p>
+
+            <input class="ai-input" id="aiInput"
+                placeholder="Example: I need free study materials">
+
+            <br>
+
+            <button onclick="askAI()">Ask Assistant</button>
+
+            <div id="aiResult"></div>
+
+            <small>
+                Demo assistant: suggestions use simple keyword matching,
+                not a live AI model.
+            </small>
+        </div>
+    </section>
+
+    <section>
+        <div class="ai-box">
+            <h2>❤️ Small Help. Big Change.</h2>
+            <p>
+                Your small action can create a positive impact
+                in someone's life.
+            </p>
+            <button onclick="openModal()">Join the Community</button>
+        </div>
+    </section>
+
+    <footer>
+        <h2>🌱 Lifeloop</h2>
+        <p>Connect. Help. Grow.</p>
+        <p>Building stronger communities together.</p>
+        <p>© 2026 Lifeloop. All rights reserved.</p>
+    </footer>
+
+    <!-- Post a Need Modal -->
+
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+
+            <h2>Post a Community Need</h2>
+
+            <form id="postForm">
+                <input type="text" id="postTitle"
+                    placeholder="What do you need?" required>
+
+                <textarea id="postDescription"
+                    placeholder="Describe your need..." required></textarea>
+
+                <select id="postCategory" required>
+                    <option value="">Select Category</option>
+                    <option>Education</option>
+                    <option>Social Help</option>
+                    <option>Food</option>
+                    <option>Jobs and Skills</option>
+                    <option>Environment</option>
+                    <option>Community</option>
+                </select>
+
+                <select id="postLocation" required>
+                    <option value="">Select Reach</option>
+                    <option value="Local">Local</option>
+                    <option value="Nationwide">Nationwide</option>
+                </select>
+
+                <input type="text" id="postPlace"
+                    placeholder="Enter your city or area" required>
+
+                <button type="submit">Publish Post</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let posts = [
+            {
+                title: "Free Mathematics Tutoring",
+                description: "Looking for volunteers to teach mathematics to school students.",
+                category: "Education",
+                location: "Local",
+                place: "Mysuru"
+            },
+            {
+                title: "Food Donation Drive",
+                description: "Help us distribute food to people in need.",
+                category: "Food",
+                location: "Local",
+                place: "Bengaluru"
+            },
+            {
+                title: "Volunteer for Tree Plantation",
+                description: "Join our mission to plant more trees and protect nature.",
+                category: "Environment",
+                location: "Nationwide",
+                place: "India"
+            },
+            {
+                title: "Free Skill Learning Group",
+                description: "Let's learn programming and digital skills together.",
+                category: "Jobs and Skills",
+                location: "Nationwide",
+                place: "India"
+            },
+            {
+                title: "Help an Elderly Neighbour",
+                description: "Looking for volunteers to help elderly people with daily tasks.",
+                category: "Social Help",
+                location: "Local",
+                place: "Mysuru"
+            }
+        ];
+
+        function displayPosts() {
+            const container = document.getElementById("postsContainer");
+            const search = document.getElementById("searchInput").value.toLowerCase();
+            const location = document.getElementById("locationFilter").value;
+            const category = document.getElementById("categoryFilter").value;
+
+            container.innerHTML = "";
+
+            const filteredPosts = posts.filter(post => {
+                const matchesSearch =
+                    post.title.toLowerCase().includes(search) ||
+                    post.description.toLowerCase().includes(search) ||
+                    post.place.toLowerCase().includes(search);
+
+                const matchesLocation =
+                    location === "All" || post.location === location;
+
+                const matchesCategory =
+                    category === "All" || post.category === category;
+
+                return matchesSearch && matchesLocation && matchesCategory;
+            });
+
+            if (filteredPosts.length === 0) {
+                container.innerHTML = "<p>No posts found. Try another search.</p>";
+                return;
+            }
+
+            filteredPosts.forEach(post => {
+                container.innerHTML += `
+                    <div class="post">
+                        <span class="tag">${post.category}</span>
+                        <h3>${escapeHTML(post.title)}</h3>
+                        <p>${escapeHTML(post.description)}</p>
+                        <small>📍 ${escapeHTML(post.place)} · ${post.location}</small>
+                        <button onclick="offerHelp()">Offer Help</button>
+                    </div>
+                `;
+            });
+        }
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[char]);
+        }
+
+        function filterCategory(category) {
+            document.getElementById("categoryFilter").value = category;
+            displayPosts();
+            document.getElementById("community").scrollIntoView();
+        }
+
+        function openModal() {
+            document.getElementById("postModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("postModal").style.display = "none";
+        }
+
+        document.getElementById("postForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const newPost = {
+                title: document.getElementById("postTitle").value.trim(),
+                description: document.getElementById("postDescription").value.trim(),
+                category: document.getElementById("postCategory").value,
+                location: document.getElementById("postLocation").value,
+                place: document.getElementById("postPlace").value.trim()
+            };
+
+            posts.unshift(newPost);
+            displayPosts();
+            this.reset();
+            closeModal();
+
+            alert("Your demo post has been added!");
+        });
+
+        function offerHelp() {
+            alert("Thank you for wanting to help! User accounts and messaging will be added in a future version.");
+        }
+
+        function askAI() {
+            const question = document.getElementById("aiInput").value.toLowerCase();
+            const result = document.getElementById("aiResult");
+
+            if (question.trim() === "") {
+                result.innerText = "Please describe what help you need.";
+                return;
+            }
+
+            if (question.includes("study") || question.includes("book") ||
+                question.includes("school") || question.includes("teach")) {
+                result.innerText = "Suggested category: Education 📚";
+            }
+            else if (question.includes("food") || question.includes("hungry") ||
+                question.includes("meal")) {
+                result.innerText = "Suggested category: Food 🍱";
+            }
+            else if (question.includes("job") || question.includes("work") ||
+                question.includes("skill")) {
+                result.innerText = "Suggested category: Jobs and Skills 💼";
+            }
+            else if (question.includes("tree") || question.includes("plant") ||
+                question.includes("environment")) {
+                result.innerText = "Suggested category: Environment 🌳";
+            }
+            else if (question.includes("elderly") || question.includes("help") ||
+                question.includes("volunteer")) {
+                result.innerText = "Suggested category: Social Help 🤝";
+            }
+            else {
+                result.innerText = "Suggested category: Community 🏘️. Explore community posts to find relevant support.";
+            }
+        }
+
+        displayPosts();
+    </script>
+
+</body>
+</html>

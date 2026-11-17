@@ -1,2 +1,23 @@
-# LifeLoop
-LifeLoop is an AI-powered platform that connects people who need help with individuals and organizations willing to provide support. It brings together educational assistance, food support, job opportunities, skill development, and volunteering in one platform to build a stronger and more supportive community.
+# LifeLoop 🌍
+### AI-Powered Community Connection and Support Platform
+
+## About
+LifeLoop connects people who need help with people and organizations willing to provide support.
+
+## Features
+- Educational Assistance
+- Food Support
+- Job Opportunities
+- Skill Development
+- Volunteer Connections
+- AI-Powered Assistance
+
+## Technologies Used
+- Python
+- HTML
+- CSS
+- JavaScript
+- SQLite
+
+## Project Status
+Under Development
