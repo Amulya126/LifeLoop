@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4">
+            <h2 class="mb-4 text-primary">✏️ Edit Request</h2>
+            
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label font-weight-bold">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label font-weight-bold">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" required>{{ post.description }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label font-weight-bold">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        {% for cat in categories %}
+                            <option value="{{ cat }}" {% if post.category == cat %}selected{% endif %}>
+                                {{ category_mapping[cat] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="location" class="form-label font-weight-bold">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{ post.location }}" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">Request Reach Scope:</label>
+                    <div class="d-flex gap-4">
+                        {% for key, label in scope_mapping.items() %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="scope" id="scope_{{ key }}" value="{{ key }}" {% if post.scope == key %}checked{% endif %}>
+                                <label class="form-check-label" for="scope_{{ key }}">
+                                    {{ label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+                    <a href="{{ url_for('my_posts') }}" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero Section -->
+<div class="py-5 text-white text-center" style="background-color: #0a192f; border-bottom: 4px solid #fbbf24;">
+    <div class="container py-4">
+        <h1 class="display-4 fw-bold mb-3" style="color: #fbbf24;">
+            <i class="fa-solid fa-infinity me-2"></i>Lifeloop Community Platform
+        </h1>
+        <p class="lead text-light mb-4 mx-auto" style="max-width: 700px;">
+            Connecting neighbors for support, resource sharing, and community growth. Together, we bridge every gap.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            {% if session.get("user_id") %}
+                <a href="{{ url_for('dashboard') }}" class="btn fw-bold px-4 py-2" style="background-color: #fbbf24; color: #0a192f; border: none;">
+                    <i class="fa-solid fa-gauge me-1"></i> Go to Dashboard
+                </a>
+                <a href="{{ url_for('create_post') }}" class="btn text-white fw-bold px-4 py-2" style="background-color: #10b981; border: none;">
+                    <i class="fa-solid fa-plus me-1"></i> Create Post
+                </a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn fw-bold px-4 py-2" style="background-color: #fbbf24; color: #0a192f; border: none;">
+                    <i class="fa-solid fa-right-to-bracket me-1"></i> Login
+                </a>
+                <a href="{{ url_for('register') }}" class="btn text-white fw-bold px-4 py-2" style="background-color: #10b981; border: none;">
+                    <i class="fa-solid fa-user-plus me-1"></i> Register
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Categories Showcase Section -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold" style="color: #0a192f;">Explore Community Categories</h2>
+        <p class="text-muted small">Find or offer support across our key community pillars</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Food -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 text-center p-3" style="background-color: #fffbeb; border-top: 4px solid #f59e0b !important;">
+                <div class="card-body">
+                    <div class="display-5 mb-3">🍲</div>
+                    <h5 class="fw-bold text-dark">Food</h5>
+                    <p class="text-muted small">Share surplus meals, groceries, and nutritional support with neighbors.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 text-center p-3" style="background-color: #eff6ff; border-top: 4px solid #3b82f6 !important;">
+                <div class="card-body">
+                    <div class="display-5 mb-3">🎓</div>
+                    <h5 class="fw-bold text-dark">Education</h5>
+                    <p class="text-muted small">Offer tutoring, skill workshops, books, and learning resources.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job and Skills -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 text-center p-3" style="background-color: #f5f3ff; border-top: 4px solid #8b5cf6 !important;">
+                <div class="card-body">
+                    <div class="display-5 mb-3">💼</div>
+                    <h5 class="fw-bold text-dark">Job and Skills</h5>
+                    <p class="text-muted small">Connect with local gig opportunities, resume guidance, and vocational skills.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Help -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 text-center p-3" style="background-color: #fff1f2; border-top: 4px solid #e11d48 !important;">
+                <div class="card-body">
+                    <div class="display-5 mb-3">🤝</div>
+                    <h5 class="fw-bold text-dark">Social Help</h5>
+                    <p class="text-muted small">Provide community care, companionship, and emergency assistance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Environment -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 text-center p-3" style="background-color: #ecfdf5; border-top: 4px solid #10b981 !important;">
+                <div class="card-body">
+                    <div class="display-5 mb-3">🌳</div>
+                    <h5 class="fw-bold text-dark">Environment</h5>
+                    <p class="text-muted small">Join local cleanups, tree planting, and sustainability projects.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 text-center p-3" style="background-color: #fefce8; border-top: 4px solid #fbbf24 !important;">
+                <div class="card-body">
+                    <div class="display-5 mb-3">🏘️</div>
+                    <h5 class="fw-bold text-dark">Community</h5>
+                    <p class="text-muted small">General neighborhood updates, events, and community building initiatives.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

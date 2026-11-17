@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4" style="max-width: 700px;">
+    <div class="card p-4 shadow-sm border-0" style="border-top: 4px solid #fbbf24 !important;">
+        <h2 class="fw-bold mb-4" style="color: #0a192f;">
+            <i class="fa-solid fa-pen-to-square me-2 text-warning"></i>Edit Request
+        </h2>
+        
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-danger py-2 small" role="alert">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('edit_post', post_id=post.id) }}" method="POST">
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Title</label>
+                <input type="text" name="title" class="form-control" value="{{ post.title }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Description</label>
+                <textarea name="description" class="form-control" rows="4" required>{{ post.description }}</textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Category</label>
+                <select name="category" class="form-select" required>
+                    <option value="" disabled>-- Select Community Category --</option>
+                    <option value="food" {% if post.category == 'food' %}selected{% endif %}>🍲 Food</option>
+                    <option value="education" {% if post.category == 'education' %}selected{% endif %}>🎓 Education</option>
+                    <option value="job" {% if post.category == 'job' %}selected{% endif %}>💼 Job and Skills</option>
+                    <option value="social" {% if post.category == 'social' %}selected{% endif %}>🤝 Social Help</option>
+                    <option value="environment" {% if post.category == 'environment' %}selected{% endif %}>🌳 Environment</option>
+                    <option value="community" {% if post.category == 'community' %}selected{% endif %}>🏘️ Community</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Location</label>
+                <input type="text" name="location" class="form-control" value="{{ post.location }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Request Reach Scope:</label>
+                <div class="d-flex gap-4 mt-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="scope" id="scopeLocal" value="local" {% if post.scope == 'local' %}checked{% endif %}>
+                        <label class="form-check-input-label small fw-semibold text-secondary" for="scopeLocal">
+                            Local (Nearby Community)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="scope" id="scopeCity" value="city" {% if post.scope == 'city' %}checked{% endif %}>
+                        <label class="form-check-input-label small fw-semibold text-secondary" for="scopeCity">
+                            City-wide
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="scope" id="scopeOnline" value="online" {% if post.scope == 'online' %}checked{% endif %}>
+                        <label class="form-check-input-label small fw-semibold text-secondary" for="scopeOnline">
+                            Online / Virtual
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn text-white fw-bold px-4 py-2" style="background-color: #10b981; border: none;">
+                    <i class="fa-solid fa-save me-1"></i> Save Changes
+                </button>
+                <a href="{{ url_for('my_posts') }}" class="btn btn-secondary fw-bold px-4 py-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

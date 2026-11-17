@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm p-4">
+            <h2 class="mb-3 text-primary">🤝 Volunteer Registration</h2>
+            <p class="text-muted mb-4">Sign up with your core skills to get instant match recommendations.</p>
+            
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="fullname" class="form-label font-weight-bold">Full Name</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter your name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="skills" class="form-label font-weight-bold">Your Skills / Expertise</label>
+                    <input type="text" class="form-control" id="skills" name="skills" placeholder="e.g., Python, Teaching, Cooking, Medical Support" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="location" class="form-label font-weight-bold">Your City / Location</label>
+                    <input type="text" class="form-control" id="location" name="location" placeholder="e.g., Mangaluru" required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 py-2">✅ Register as Volunteer</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

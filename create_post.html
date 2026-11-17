@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4">
+            <h2 class="mb-4 text-primary">📝 Create Help Request or Offer</h2>
+            
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label font-weight-bold">Title / Short Summary</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="e.g., Need help learning basic Python coding" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label font-weight-bold">Detailed Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Describe what you need or what assistance you can provide..." required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label font-weight-bold">Category (Optional - AI auto-selects if left blank)</label>
+                    <select class="form-select" id="category" name="category">
+                        <option value="">-- Let AI Auto-Classify --</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat }}">{{ category_mapping[cat] }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="mb-3">
+    <label class="form-label fw-bold text-dark small">Category</label>
+    <div class="mb-3">
+    <label class="form-label fw-bold text-dark small">Category</label>
+    <select name="category" class="form-select" required>
+        <option value="" disabled selected>-- Select Community Category --</option>
+        <option value="food">🍲 Food</option>
+        <option value="education">🎓 Education</option>
+        <option value="job">💼 Job and Skills</option>
+        <option value="social">🤝 Social Help</option>
+        <option value="environment">🌳 Environment</option>
+        <option value="community">🏘️ Community</option>
+    </select>
+</div>
+</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="location" class="form-label font-weight-bold">Location / Area</label>
+                    <input type="text" class="form-control" id="location" name="location" placeholder="e.g., Mangaluru / Online" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">Request Reach Scope:</label>
+                    <div class="d-flex gap-4">
+                        {% for key, label in scope_mapping.items() %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="scope" id="scope_{{ key }}" value="{{ key }}" {% if loop.first %}checked{% endif %}>
+                                <label class="form-check-label" for="scope_{{ key }}">
+                                    {{ label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 py-2">🚀 Submit Request</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

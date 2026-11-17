@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4" style="max-width: 800px;">
+
+    <!-- Card 1: Post Details -->
+    <div class="card p-4 shadow-sm mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="badge px-3 py-2" style="background-color: #0a192f; color: #fbbf24;">
+                {{ category_mapping.get(post.category, post.category) }}
+            </span>
+            <span class="badge bg-light text-dark border">
+                {{ scope_mapping.get(post.scope, post.scope) }}
+            </span>
+        </div>
+
+        <h2 class="fw-bold mb-3" style="color: #0a192f;">{{ post.title }}</h2>
+        <p class="text-muted fs-5 mb-4" style="white-space: pre-line;">{{ post.description }}</p>
+        
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top text-muted small">
+            <span><i class="fa-solid fa-user me-1 text-primary"></i> Posted by: <strong>{{ post.author or 'Community Member' }}</strong></span>
+            <span><i class="fa-solid fa-location-dot me-1 text-danger"></i> {{ post.location }}</span>
+        </div>
+
+        <!-- Like & Share Buttons -->
+        <div class="mt-4 pt-3 border-top d-flex flex-wrap align-items-center gap-3">
+            <form action="{{ url_for('like_post', post_id=post.id) }}" method="POST" class="m-0">
+                <button type="submit" class="btn btn-warning fw-bold px-3">
+                    <i class="fa-solid fa-heart me-1 text-danger"></i> Like ({{ like_count or 0 }})
+                </button>
+            </form>
+
+            <button type="button" class="btn btn-edit fw-bold px-3" onclick="copyPostLink()">
+                <i class="fa-solid fa-share-nodes me-1"></i> Share Post
+            </button>
+            
+            <span id="copyMsg" class="text-success fw-bold small" style="display:none;">
+                ✅ Link copied to clipboard!
+            </span>
+        </div>
+    </div>
+    <!-- End of Card 1 -->
+
+    <!-- Card 2: Separate Community Discussion Box -->
+    <div class="card p-4 shadow-sm">
+        <h4 class="fw-bold mb-3" style="color: #0a192f;">
+            <i class="fa-solid fa-comments me-2 text-primary"></i>Community Discussion
+        </h4>
+        
+        <form action="{{ url_for('add_comment', post_id=post.id) }}" method="POST" class="mb-4">
+            <div class="mb-3">
+                <textarea name="comment" class="form-control" rows="2" placeholder="Write a supportive comment or offer help..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-get-started btn-sm px-4">
+                <i class="fa-solid fa-paper-plane me-1"></i> Post Comment
+            </button>
+        </form>
+
+        {% if comments %}
+            <div class="d-flex flex-column gap-3">
+                {% for c in comments %}
+                <div class="p-3 rounded-3" style="background-color: #f8fafc; border-left: 4px solid #0ea5e9;">
+                    <div class="d-flex justify-content-between mb-1">
+                        <strong class="small text-primary"><i class="fa-solid fa-user-circle me-1"></i>{{ c.author or 'Community Member' }}</strong>
+                    </div>
+                    <p class="mb-0 text-dark">{{ c.comment }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted fst-italic small mb-0">No comments yet. Be the first to offer help!</p>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+function copyPostLink() {
+    navigator.clipboard.writeText(window.location.href);
+    document.getElementById("copyMsg").style.display = "inline";
+    setTimeout(() => { document.getElementById("copyMsg").style.display = "none"; }, 2500);
+}
+</script>
+{% endblock %}

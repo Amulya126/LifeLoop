@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="jumbotron bg-light p-5 rounded shadow-sm mb-4">
+        <h1 class="display-5 text-primary">Welcome back, {{ session.get('user_name', 'Member') }}! 👋</h1>
+        <p class="lead">Here is what's happening across the Lifeloop community network today.</p>
+        <hr class="my-4">
+        <div class="d-flex gap-3 flex-wrap">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('create_post') }}" role="button">➕ Create New Request</a>
+            <a class="btn btn-outline-primary btn-lg" href="{{ url_for('matches') }}" role="button">✨ View AI Smart Matches</a>
+            <a class="btn btn-outline-success btn-lg" href="{{ url_for('view_posts') }}" role="button">🌍 Browse All Posts</a>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-primary p-3 h-100">
+                <div class="card-body">
+                    <h3 class="display-6">🌍</h3>
+                    <h5 class="text-muted">Total Community Posts</h5>
+                    <h2 class="text-primary">{{ total_posts }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-success p-3 h-100">
+                <div class="card-body">
+                    <h3 class="display-6">🤝</h3>
+                    <h5 class="text-muted">Your Active Posts</h5>
+                    <h2 class="text-success">{{ my_posts }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-info p-3 h-100">
+                <div class="card-body">
+                    <h3 class="display-6">🟢</h3>
+                    <h5 class="text-muted">Open Requests</h5>
+                    <h2 class="text-info">{{ open_posts }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold" style="color: #0a192f;"><i class="fa-solid fa-folder-open me-2 text-warning"></i>My Community Posts</h2>
+        <p class="text-muted mb-0">Manage, edit, or close your active requests • • •</p>
+    </div>
+    <a href="{{ url_for('create_post') }}" class="btn btn-get-started">
+        <i class="fa-solid fa-plus me-1"></i> Create New Post
+    </a>
+</div>
+
+<hr class="dotted-divider">
+
+{% if posts %}
+    <div class="row g-4">
+        {% for post in posts %}
+        <div class="col-md-6">
+            <div class="card h-100 p-3">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge px-3 py-2" style="background-color: #0a192f; color: #fbbf24;">
+                            {{ category_mapping.get(post.category, post.category) }}
+                        </span>
+                        <span class="badge {{ 'bg-success' if post.status == 'Open' else 'bg-secondary' }}">
+                            {{ post.status }}
+                        </span>
+                    </div>
+
+                    <h5 class="card-title fw-bold mt-2">{{ post.title }}</h5>
+                    <p class="card-text text-muted flex-grow-1">{{ post.description }}</p>
+                    <p class="small fw-semibold mb-3" style="color: #1d3557;">
+                        <i class="fa-solid fa-location-dot me-1 text-danger"></i> {{ post.location }}
+                    </p>
+
+                    <!-- Bright Edit, View & Delete Action Buttons -->
+                    <div class="d-flex flex-wrap gap-2 pt-2 border-top">
+                        <a href="{{ url_for('post_details', post_id=post.id) }}" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-eye me-1"></i> View
+                        </a>
+                        <a href="{{ url_for('update_post', post_id=post.id) }}" class="btn btn-edit btn-sm">
+                            <i class="fa-solid fa-pen-to-square me-1"></i> Edit
+                        </a>
+                        <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this post?');">
+                            <button type="submit" class="btn btn-delete btn-sm">
+                                <i class="fa-solid fa-trash me-1"></i> Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card p-5 text-center">
+        <i class="fa-solid fa-inbox fa-3x mb-3 text-muted"></i>
+        <h4 class="fw-bold">You haven't posted any requests yet</h4>
+        <p class="text-muted">Create your first request so the Lifeloop community can help!</p>
+        <div>
+            <a href="{{ url_for('create_post') }}" class="btn btn-get-started px-4">
+                <i class="fa-solid fa-plus me-1"></i> Create Your First Post
+            </a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

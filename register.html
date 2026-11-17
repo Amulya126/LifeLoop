@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="card p-4 shadow-sm border-0" style="border-top: 4px solid #fbbf24 !important;">
+        <h2 class="fw-bold mb-4" style="color: #0a192f;">
+            <i class="fa-solid fa-user-plus me-2 text-warning"></i>Create Account
+        </h2>
+        
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-danger py-2 small" role="alert">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('register') }}" method="POST">
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Full Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Email Address</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold text-dark small">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Create a secure password" required>
+            </div>
+            
+            <div class="d-grid mt-4">
+                <button type="submit" class="btn text-white fw-bold py-2" style="background-color: #10b981; border: none;">
+                    <i class="fa-solid fa-user-check me-1"></i> Register Account
+                </button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3 pt-3 border-top">
+            <p class="text-muted small mb-0">Already registered? <a href="{{ url_for('login') }}" class="text-decoration-none fw-bold" style="color: #0a192f;">Login here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

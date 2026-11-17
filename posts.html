@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">🌍 Community Requests & Offers</h2>
+
+    <!-- Search and Filter Bar -->
+    <form method="GET" action="{{ url_for('view_posts') }}" class="row g-2 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Search title, skill, or city..." value="{{ search }}">
+        </div>
+        <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="">All Categories</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.category }}" {% if selected_category == cat.category %}selected{% endif %}>
+                        {{ cat.display }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="scope" class="form-select">
+                <option value="">All Reach Scopes</option>
+                {% for key, label in scope_mapping.items() %}
+                    <option value="{{ key }}" {% if selected_scope == key %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">🔍 Filter</button>
+        </div>
+    </form>
+
+    <!-- Posts List -->
+    {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-primary">
+                                {{ category_mapping.get(post.category, post.category) }}
+                            </span>
+                            <span class="badge bg-light text-dark border">
+                                {{ scope_mapping.get(post.scope, '📍 Local') }}
+                            </span>
+                        </div>
+                        <h5 class="card-title mt-2">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.description }}</p>
+                        <p class="small text-muted mb-1"><strong>📌 Location:</strong> {{ post.location }}</p>
+                        <p class="small text-muted mb-3"><strong>👤 Posted by:</strong> {{ post.name or 'Member' }}</p>
+                        <a href="{{ url_for('post_details', post_id=post.id) }}" class="btn btn-sm btn-outline-success">
+                            View Details →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">No posts found matching your filter.</div>
+    {% endif %}
+</div>
+{% endblock %}
